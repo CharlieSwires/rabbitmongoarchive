@@ -1,0 +1,5 @@
+com\unicard\rabbit\RabbitMQConsumer.class
+com\unicard\rabbit\RController.class
+com\unicard\rabbit\RabbitMQConfig.class
+com\unicard\rabbit\RabbitMQProducer.class
+com\unicard\rabbit\App.class
