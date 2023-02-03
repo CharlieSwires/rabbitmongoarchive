@@ -1,13 +1,18 @@
 package com.unicard.rabbit;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 @RestController
@@ -15,26 +20,22 @@ import org.springframework.web.bind.annotation.RestController;
 public class RController  {
 
     Logger log = LoggerFactory.getLogger(RController.class);
-//    @Autowired
-//    private ArchiveService service;
     @Autowired
     private RabbitMQProducer producer;
 
-    // http://localhost:8080/api/v1/publish?message=hello
-    @GetMapping("/publish")
-    public ResponseEntity<String> sendMessage(@RequestParam("message") String message){
-        producer.sendMessage(message);
-        return ResponseEntity.ok("Message sent to RabbitMQ ...");
+    // http://localhost:9900/api/v1/publish
+    @PostMapping("/publish")
+    public ResponseEntity<Boolean> post( @RequestBody List<RequestBean> input){
+        ObjectMapper mapper = new ObjectMapper();
+
+        String jsonStr = null;
+		try {
+			jsonStr = mapper.writeValueAsString(input);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+        producer.sendMessage(jsonStr);
+        return ResponseEntity.ok(true);
     }    
-//    @GetMapping(path="/getAllArray/{dateStart}/{dateEnd}/{page}", produces="application/json")
-//    public ResponseEntity<ResponseBean[]> getAllArray(@PathVariable("dateStart") String dateStart, @PathVariable("dateEnd") String dateEnd,@PathVariable("page") Integer page) throws Exception {
-//    	DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-//    	return new ResponseEntity<ResponseBean[]>(service.getAllArray(df.parse(dateStart), df.parse(dateEnd), page), HttpStatus.OK);
-//    }
-//    
-//    @PostMapping(path="/add", produces="application/json", consumes="application/json")
-//    public ResponseEntity<Boolean> post( @RequestBody List<RequestBean> input) {
-//        
-//        return new ResponseEntity<Boolean>(service.save(input), HttpStatus.OK);
-//    }    
+  
 }
