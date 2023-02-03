@@ -23,7 +23,7 @@ public class RController  {
     @Autowired
     private RabbitMQProducer producer;
 
-    // http://localhost:9900/api/v1/publish
+    // http://localhost:9900/UniCard/publish
     @PostMapping("/publish")
     public ResponseEntity<Boolean> post( @RequestBody List<RequestBean> input){
         ObjectMapper mapper = new ObjectMapper();
