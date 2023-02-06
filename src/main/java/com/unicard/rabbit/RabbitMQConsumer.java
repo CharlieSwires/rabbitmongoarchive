@@ -17,7 +17,7 @@ public class RabbitMQConsumer {
 
     @RabbitListener(queues = {"${rabbitmq.queue.name}"})
     public void consume(String message){
-        final String uri = "http://archiver:8080/uni-archiver/UniCard/add";
+        final String uri = "http://archiver:8080/uni-archiver/api/v1/dataarray";
         String ib = message;
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();

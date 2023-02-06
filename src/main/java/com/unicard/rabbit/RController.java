@@ -16,7 +16,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 @RestController
-@RequestMapping(path = "/UniCard")
+@RequestMapping(path = "/UniCard/api/v1")
 public class RController  {
 
     Logger log = LoggerFactory.getLogger(RController.class);
@@ -24,7 +24,7 @@ public class RController  {
     private RabbitMQProducer producer;
 
     // http://localhost:9900/UniCard/publish
-    @PostMapping("/publish")
+    @PostMapping("/dataarray")
     public ResponseEntity<Boolean> post( @RequestBody List<RequestBean> input){
         ObjectMapper mapper = new ObjectMapper();
 
