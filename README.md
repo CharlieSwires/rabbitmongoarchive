@@ -1,4 +1,27 @@
-<code>
+rabbit
+------
+<p>in git bash</p>
+<p>git clone https://gitlab.com/UnicardLtd/product/RabbitMQ-Broker.git</p>
+<p>This contains the java</p>
+
+build
+-----
+
+<p>you'll need an application.properties file for the RabbitMQ settings and spring</p>
+<p>mvn package</p>
+
+<p>produces rabbit-0.0.1-SNAPSHOT.jar in target</p>
+
+
+deploy
+------
+<p>docker build --tag rabbit:latest .</p>
+<p>docker run --name rabbit --link rabbitmq --link archiver -d -p 9900:8080 
+
+
+RESTful
+-------
+<code> payload:
 [
     {
         "customerId": "charlie2",
@@ -12,6 +35,5 @@
     }
 ]
 </code>
-<p>http://localhost:9900/UniCard/publish</p>
-<p>docker build --tag rabbit:latest .</p>
-<p>docker run --name rabbit --link rabbitmq --link archiver -d -p 9900:8080 rabbit:latest</p>
+<p>POST - http://localhost:9900/UniCard/api/v1/dataarray</p>
+
