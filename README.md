@@ -15,8 +15,8 @@ build
 
 deploy
 ------
-<p>docker build --tag rabbit:latest .</p>
-<p>docker run --name rabbit --link rabbitmq --link archiver -d -p 9900:8080 
+<p>docker build --tag rabbit2:latest .</p>
+<p>docker run --name rabbit2 --link rabbitmq -d -p 9901:8080 rabbit2:latest</p> 
 
 
 RESTful
@@ -35,5 +35,5 @@ RESTful
     }
 ]
 </code>
-<p>POST - http://localhost:9900/UniCard/api/v1/dataarray</p>
+<p>POST - http://localhost:9901/UniCard/api/v1/dataarray</p>
 

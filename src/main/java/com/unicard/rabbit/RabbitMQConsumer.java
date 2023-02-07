@@ -15,18 +15,9 @@ public class RabbitMQConsumer {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RabbitMQConsumer.class);
 
-    @RabbitListener(queues = {"${rabbitmq.queue.name}"})
-    public void consume(String message){
-        final String uri = "http://archiver:8080/uni-archiver/api/v1/dataarray";
-        String ib = message;
-        RestTemplate restTemplate = new RestTemplate();
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-
-        HttpEntity<String> entity = new HttpEntity<String>(ib ,headers);
-
-        @SuppressWarnings("unchecked")
-		Boolean result = restTemplate.postForObject( uri, entity, Boolean.class);
+   
+    @RabbitListener(queues = {"${rabbitmq.queue2.name}"})
+    public void consume(Long message){
 
         LOGGER.info(String.format("Received message -> %s", message));
     }
