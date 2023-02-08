@@ -15,8 +15,17 @@ build
 
 deploy
 ------
+<p>docker run -d --name some-mongo \
+	-e MONGO_INITDB_ROOT_USERNAME=root \
+	-e MONGO_INITDB_ROOT_PASSWORD=? \
+	mongo:6.0
+</p>
+<p>If there isn't one deployed and running you'll need rabbitmq.</p>
+<p>docker pull rabbitmq:3.10-management</p>
+<p>docker run --name rabbitmq --rm -it -p 15672:15672 -p 5672:5672 rabbitmq:3.10-management</p>
+<br>
 <p>docker build --tag rabbit2:latest .</p>
-<p>docker run --name rabbit2 --link rabbitmq -d -p 9901:8080 rabbit2:latest</p> 
+<p>docker run --name rabbit2 --link some-mongo --link rabbitmq -d -p 9901:8080 rabbit2:latest</p>
 
 
 RESTful
@@ -35,5 +44,5 @@ RESTful
     }
 ]
 </code>
-<p>POST - http://localhost:9901/UniCard/api/v1/dataarray</p>
+<p>POST - http://localhost:9900/UniCard/api/v1/dataarray</p>
 

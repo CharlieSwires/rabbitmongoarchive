@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
-public class RabbitMQProducer {
+public class RabbitMQProducerBack {
 
 	    @Value("${rabbitmq.exchange2.name}")
 	    private String exchange2;
@@ -16,11 +16,11 @@ public class RabbitMQProducer {
 	    @Value("${rabbitmq.routing2.key}")
 	    private String routingKey2;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(RabbitMQProducer.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RabbitMQProducerBack.class);
 
     private RabbitTemplate rabbitTemplate;
 
-    public RabbitMQProducer(RabbitTemplate rabbitTemplate) {
+    public RabbitMQProducerBack(RabbitTemplate rabbitTemplate) {
         this.rabbitTemplate = rabbitTemplate;
     }
 
