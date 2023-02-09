@@ -24,7 +24,7 @@ public class RabbitMQProducerBack {
         this.rabbitTemplate = rabbitTemplate;
     }
 
-    public void sendMessage(Long message){
+    public void sendMessage(String message){
         LOGGER.info(String.format("Message sent -> %s", message));
         rabbitTemplate.convertAndSend(exchange2, routingKey2, message);
     }

@@ -1,5 +1,10 @@
 package com.unicard.rabbit;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -8,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.unicard.rabbit.RequestBean.Inner;
 
 @Service
 public class RabbitMQConsumer {
@@ -21,16 +27,6 @@ public class RabbitMQConsumer {
 
     @RabbitListener(queues = {"${rabbitmq.queue1.name}"})
     public void consume(String message){
-//        final String uri = "http://archiver:8080/uni-archiver/api/v1/dataarray";
-//        String ib = message;
-//        RestTemplate restTemplate = new RestTemplate();
-//        HttpHeaders headers = new HttpHeaders();
-//        headers.setContentType(MediaType.APPLICATION_JSON);
-//
-//        HttpEntity<String> entity = new HttpEntity<String>(ib ,headers);
-//
-//        @SuppressWarnings("unchecked")
-//		Long result = restTemplate.postForObject( uri, entity, Long.class);
     	ObjectMapper mapper = new ObjectMapper();
     	RequestBean bean = null;
 		try {
@@ -39,8 +35,28 @@ public class RabbitMQConsumer {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		Long result = service.save(bean.getList(), bean.getMessageId());
-      	producer.sendMessage(result);
+		List<Inner> result = null;
+		if (bean.getDateStart() != null) {
+	    	DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+	    	try {
+				result = service.getAllArray(df.parse(bean.getDateStart()), df.parse(bean.getDateEnd()), bean.getPsge());
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	    	bean.setList(result);
+		} else {
+			bean.setMessageId(service.save(bean.getList(), bean.getMessageId()));
+
+		}
+		String jsonStr = null;
+		try {
+			jsonStr = mapper.writeValueAsString(bean);
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+     	producer.sendMessage(jsonStr);
 
         LOGGER.info(String.format("Received message -> %s", result.toString()));
     }
