@@ -27,6 +27,7 @@ public class RabbitMQConsumer {
 
     @RabbitListener(queues = {"${rabbitmq.queue1.name}"})
     public void consume(String message){
+    	if (message == null) return;
     	ObjectMapper mapper = new ObjectMapper();
     	RequestBean bean = null;
 		try {
@@ -36,7 +37,7 @@ public class RabbitMQConsumer {
 			e.printStackTrace();
 		}
 		List<Inner> result = null;
-		if (bean.getDateStart() != null) {
+		if (bean.getDateStart() != null) { //date set must be a get not post
 	    	DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 	    	try {
 				result = service.getAllArray(df.parse(bean.getDateStart()), df.parse(bean.getDateEnd()), bean.getPsge());
@@ -58,6 +59,6 @@ public class RabbitMQConsumer {
 		}
      	producer.sendMessage(jsonStr);
 
-        LOGGER.info(String.format("Received message -> %s", result.toString()));
+        LOGGER.info(String.format("Received message -> %s", jsonStr.toString()));
     }
 }
