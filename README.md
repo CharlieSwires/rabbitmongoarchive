@@ -1,5 +1,5 @@
-rabbit
-------
+rabbit2
+-------
 <p>in git bash</p>
 <p>git clone https://gitlab.com/UnicardLtd/playground/rabbitmongoarchive.git</p>
 <p>This contains the java</p>
@@ -10,7 +10,7 @@ build
 <p>you'll need an application.properties file for the RabbitMQ settings and spring</p>
 <p>mvn package</p>
 
-<p>produces rabbit-0.0.1-SNAPSHOT.jar in target</p>
+<p>produces rabbit2-0.0.1-SNAPSHOT.jar in target</p>
 
 
 deploy
