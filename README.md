@@ -1,7 +1,7 @@
 rabbit
 ------
 <p>in git bash</p>
-<p>git clone https://gitlab.com/UnicardLtd/product/RabbitMQ-Broker.git</p>
+<p>git clone https://gitlab.com/UnicardLtd/playground/rabbitmongoarchive.git</p>
 <p>This contains the java</p>
 
 build
