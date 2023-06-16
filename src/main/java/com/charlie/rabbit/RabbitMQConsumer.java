@@ -1,4 +1,4 @@
-package com.unicard.rabbit;
+package com.charlie.rabbit;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -13,9 +13,9 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.charlie.rabbit.RequestBean.Inner;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.unicard.rabbit.RequestBean.Inner;
 
 @Service
 public class RabbitMQConsumer {
